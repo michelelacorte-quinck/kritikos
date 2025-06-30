@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Kritikos Evaluation API
+  version: 1.0.0
+  description: Evaluates AI-generated content based on multiple scoring criteria.
+
+paths:
+  /ai/kritikos:
+    post:
+      summary: Evaluate a base model's response using an evaluation model
+      operationId: evaluateKritikos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KritikosRequest'
+      responses:
+        '200':
+          description: Evaluation result returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluationResult'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    KritikosRequest:
+      type: object
+      required:
+        - systemPrompt
+        - prompt
+        - baseModel
+        - evaluationModel
+        - maxRetries
+      properties:
+        systemPrompt:
+          type: string
+        prompt:
+          type: string
+        baseModel:
+          type: string
+        evaluationModel:
+          type: string
+        baseModelTemperature:
+          type: number
+          format: float
+        evaluationModelTemperature:
+          type: number
+          format: float
+        maxRetries:
+          type: integer
+
+    EvaluationResult:
+      type: object
+      required:
+        - scores
+        - strengths
+        - weaknesses
+        - actionableAdvice
+        - improvedAnswer
+      properties:
+        scores:
+          type: object
+          required:
+            - relevance
+            - correctness
+            - completeness
+            - clarity
+            - style
+          properties:
+            relevance:
+              type: integer
+            correctness:
+              type: integer
+            completeness:
+              type: integer
+            clarity:
+              type: integer
+            style:
+              type: integer
+        strengths:
+          type: array
+          items:
+            type: string
+        weaknesses:
+          type: array
+          items:
+            type: string
+        actionableAdvice:
+          type: array
+          items:
+            type: string
+        improvedAnswer:
+          type: string
