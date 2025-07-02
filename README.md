@@ -170,7 +170,7 @@ Full Response (with kritikos):
 
 ## License
 
-This project is released under the Apache 2.0 license. See `LICENSE` for details.
+This project is released under the MIT license. See `LICENSE` for details.
 
 ---
 
